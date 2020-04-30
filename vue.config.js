@@ -5,5 +5,6 @@ module.exports = {
          */
         "open": true,
         "port": 8888
-    }
+    },
+    outputDir:process.env.outputDir
 }
