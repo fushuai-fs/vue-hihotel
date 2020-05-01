@@ -1,14 +1,16 @@
 <template>
     <el-container class="home-container">
 
-        <el-aside style="width:200px;">
-            <div class="logo">
-                <a href="">
-                    <img :src="menu.logoInfo.image" height="60" width="60"/>
-                </a><span>{{menu.logoInfo.title}}</span>
+        <el-aside  :width="collapse?'64px':'200px'">
+
+            <div class="logo" height="60px" width="200px;" style="margin: 0;padding: 0;">
+                <a href="" style=" line-height: 0">
+                    <img :src="menu.logoInfo.image" height="60" width="64" border="0"/>
+                </a>
+                    <span v-show="!collapse">{{menu.logoInfo.title}}</span>
             </div>
-            <div>
-                <el-menu unique-opened="true"
+                <el-menu :unique-opened="true" :router="true" :collapse="collapse"
+                         :collapse-transition="false"
                          default-active="2"
                          background-color="#545c64"
                          text-color="#fff"
@@ -19,7 +21,7 @@
                             <span>{{item.title}}</span>
                         </template>
                         <el-menu-item v-for="(child,i) in item.child" :index="j.toString()+'_'+i.toString()"
-                                      :key="child.pageID">
+                                      :key="child.pageID" :route="child.title">
                             <i class="el-icon-menu"></i> {{child.title}}
                         </el-menu-item>
                     </el-submenu>
@@ -36,12 +38,17 @@
                             <el-menu-item index="1-4-1">选项1</el-menu-item>
                         </el-submenu>
                     </el-submenu>
+                    <el-menu-item index="1-311"><i class="el-icon-menu"></i>
+                        <template slot="title">
+                            选项3aaaa
+                        </template>
+                    </el-menu-item>
                 </el-menu>
-            </div>
+
         </el-aside>
         <el-container>
             <el-header>
-                <div>1</div>
+                <div><a @click="collapseMenu" style="cursor:pointer;">|||</a></div>
                 <div>2</div>
                 <div>3</div>
             </el-header>
@@ -59,10 +66,10 @@
             return {
                 menu: {
                     "homeInfo": {"title": "首页", "href": "/Index/Default/"},
-                    "logoInfo": {"title": "xxxx管理系统", "image": "/img/logo.82b9c7a5.png", "href": ""},
+                    "logoInfo": {"title": "xxxx管理系统", "image": "/favicon.ico", "href": ""},
                     "menuInfo": [{
                         "pageID": 100,
-                        "Href": "",
+                        "href": "",
                         "title": "产品管理",
                         "icon": "fa fa-th-large",
                         "child": [{
@@ -84,14 +91,17 @@
                             "icon": "fa fa-caret-right"
                         }, {"pageID": 404, "href": "/Users/List", "title": "员工管理", "icon": "fa fa-caret-right"}]
                     }]
-                }
+                },
+                collapse: false
             };
         },
         create() {
             console.log('1')
         },
-        mounted() {
-            console.log(this.menu)
+        methods: {
+            collapseMenu:function(){
+                this.collapse = !this.collapse;
+            }
         }
 
 
@@ -112,7 +122,6 @@
         align-items: center;
         color: #fff;
     }
-
     .el-main {
         background-color: bisque;
         padding: 0;
