@@ -21,7 +21,7 @@
                             <span>{{item.title}}</span>
                         </template>
                         <el-menu-item v-for="(child,i) in item.child" :index="j.toString()+'_'+i.toString()"
-                                      :key="child.pageID" :route="child.title">
+                                      :key="child.pageID" :route="child.href">
                             <i class="el-icon-menu"></i> {{child.title}}
                         </el-menu-item>
                     </el-submenu>
@@ -52,7 +52,9 @@
                 <div>2</div>
                 <div>3</div>
             </el-header>
-            <el-main>Main</el-main>
+            <el-main>
+                <router-view/>
+            </el-main>
         </el-container>
     </el-container>
 </template>
@@ -74,7 +76,7 @@
                         "icon": "fa fa-th-large",
                         "child": [{
                             "pageID": 403,
-                            "href": "/Team/Index",
+                            "href": "/default",
                             "title": "团管理",
                             "icon": "fa fa-caret-right",
                             "child": []
